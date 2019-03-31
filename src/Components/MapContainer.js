@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Map from './Map'
-import {InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
+import {Marker} from 'google-maps-react';
 import Search from './Search'
 import SensorsDataController from '../Controllers/SensorsDataController'
+import EventsDataController from '../Controllers/EventsDataController'
+import FirebaseStoreSingleton from '../Stores/FirebaseStore';
 import './Res/MapContainer.css';
 import 'firebaseui/dist/firebaseui.css';
-import FirebaseStoreSingleton from '../Stores/FirebaseStore';
 
 class MapContainer extends Component {
   constructor(props) {
@@ -14,14 +15,20 @@ class MapContainer extends Component {
     this.onSearchTextReceived = this.onSearchTextReceived.bind(this);
     this.onSensorUpdate = this.onSensorUpdate.bind(this);
     this.onSensorHistoryReceived = this.onSensorHistoryReceived.bind(this);
+    this.onEventUpdate = this.onEventUpdate.bind(this);
+
     this.sensorDataController = new SensorsDataController();
     this.sensorDataController.subscribeToSensorsUpdates(this.onSensorUpdate);
+
+    this.eventsDataController = new EventsDataController();
+    this.eventsDataController.subscribeToEvents(this.onEventUpdate);
+
     this.state = {
       sensorList: [],
       user: null
     }
   }
-
+  
   componentDidMount() {
     const firebase = FirebaseStoreSingleton.getInstance();
     firebase.startFirebaseUILogin("#firebase-auth", result => {
@@ -30,16 +37,22 @@ class MapContainer extends Component {
       this.setState({ user })
     })
   }
-
+  
   componentWillUnmount() {
     this.sensorDataController.unsubscribeToSensorsUpdates(this.sensorRef);
+    this.eventsDataController.unsubscribeToEvents(this.eventRef);
+  }
+
+  onEventUpdate(ref, eventList) {
+    this.eventRef = ref;
+    // TODO : HYDRATE EVENT VIEW
   }
   
   onSensorUpdate(ref, sensorList) {
     this.sensorRef = ref;
     this.setState({sensorList: sensorList});
   }
-
+  
   onSensorHistoryReceived(sensorHistory) {
     // TODO : CALL HISTORY COMPONENT HERE
   }

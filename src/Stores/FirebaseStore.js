@@ -10,12 +10,12 @@ var config = {
 
 var FirebaseStoreSingleton = (function () {
     var instance;
- 
+    
     function createInstance() {
         var firebaseStore = new FirebaseStore();
         return firebaseStore;
     }
-
+    
     return {
         getInstance: function () {
             if (!instance) {
@@ -30,7 +30,7 @@ class FirebaseStore {
     constructor() {
         this.initFirebase();
     }
-
+    
     initFirebase() {
         Firebase.initializeApp(config);
         this.db = Firebase.database();
@@ -43,21 +43,16 @@ class FirebaseStore {
                 signInSuccessWithAuthResult: successCallback
             },
             signInOptions: [
-              // List of OAuth providers supported.
-              Firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-              // firebase.auth.FacebookAuthProvider.PROVIDER_ID,
-              // firebase.auth.TwitterAuthProvider.PROVIDER_ID,
-              // firebase.auth.GithubAuthProvider.PROVIDER_ID
+                Firebase.auth.GoogleAuthProvider.PROVIDER_ID,
             ],
-            // Other config options...
-          });
+        });
     }
-
+    
     getData(path) {
         let docRef = this.db.ref(path);
         return docRef.once('value');
     }
-
+    
     subscribeOnData(path, callback) {
         let docRef = this.db.ref(path);
         docRef.on('value', snapshot => {
@@ -68,7 +63,7 @@ class FirebaseStore {
             callback(docRef, dataTab)
         });
     }
-
+    
     unsubscribeOnData(ref) {
         ref.off();
     }
