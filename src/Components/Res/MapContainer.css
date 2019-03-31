@@ -12,6 +12,7 @@
 
 .Login {
     position: absolute;
+    bottom: 30px;
     right: 0px;
     z-index: 10;
 }
