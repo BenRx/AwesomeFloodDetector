@@ -3,13 +3,25 @@ import Map from './Map'
 import Sidebar from './Sidebar'
 import {Marker} from 'google-maps-react';
 import Search from './Search'
+import SensorInfo from './SensorInfo'
 import SensorsDataController from '../Controllers/SensorsDataController'
 import EventsDataController from '../Controllers/EventsDataController'
 import FirebaseStoreSingleton from '../Stores/FirebaseStore';
-import './Res/MapContainer.css';
+import './Res/MainContainer.css';
 import 'firebaseui/dist/firebaseui.css';
 
-class MapContainer extends Component {
+var data = [
+  [
+    {date: "2015-02-02T19:32:00",value: 0.125},
+    {date: "2015-02-02T19:40:00",value: 0.2}
+  ],
+  [
+    {date: "2015-03-02T13:32:00",value: 0.3},
+    {date: "2015-03-02T17:32:00",value: 0.1}
+  ]
+]
+
+class MainContainer extends Component {
   constructor(props) {
     super(props);
     this.onSearchTextReceived = this.onSearchTextReceived.bind(this);
@@ -19,7 +31,6 @@ class MapContainer extends Component {
 
     this.sensorDataController = new SensorsDataController();
     this.sensorDataController.subscribeToSensorsUpdates(this.onSensorUpdate);
-
     this.eventsDataController = new EventsDataController();
     this.eventsDataController.subscribeToEvents(this.onEventUpdate);
 
@@ -71,7 +82,10 @@ class MapContainer extends Component {
   
   render() {
     return (
-      <div className="MapContainer">
+      <div className="MainContainer">
+      <div style={{zIndex:10, position:'absolute'}}>
+      <SensorInfo data={data} ID='1234'/>
+      </div>
       <div id="firebase-auth" className="Login">
       </div>
       <div className="SearchBarContainer">
@@ -90,4 +104,4 @@ class MapContainer extends Component {
     }
   }
   
-  export default MapContainer
+  export default MainContainer
