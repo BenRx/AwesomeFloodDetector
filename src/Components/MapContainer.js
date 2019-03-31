@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import Map from './Map'
+import Sidebar from './Sidebar'
 import {Marker} from 'google-maps-react';
 import Search from './Search'
 import SensorsDataController from '../Controllers/SensorsDataController'
@@ -72,6 +72,9 @@ class MapContainer extends Component {
       </div>
       <div className="SearchBarContainer">
       <Search searchCallback={this.onSearchTextReceived}/>
+      </div>
+      <div className="SidebarContainer">
+      <Sidebar events={[]}/>
       </div>
       <Map ref="Gmap" google={this.props.google} centerAroundCurrentLocation={true}>
       {this.state.sensorList.map(cur => {
