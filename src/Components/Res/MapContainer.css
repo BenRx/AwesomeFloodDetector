@@ -1,0 +1,11 @@
+.MapContainer {
+    position: relative;
+}
+
+.SearchBarContainer {
+    position: absolute;
+    width: 100%;
+    height: 30px;
+    margin-top: 10px;
+    z-index: 2;
+}

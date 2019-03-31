@@ -1,0 +1,13 @@
+.SearchForm {
+    width: 50%;
+    height: 100%;
+    margin: 0 auto;
+}
+
+.SearchInput {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    border-radius: 15px;
+    padding-left: 15px;
+}
