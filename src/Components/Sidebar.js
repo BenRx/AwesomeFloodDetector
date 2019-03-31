@@ -7,7 +7,7 @@ class EventBar extends React.Component {
     super(props);
     this.state = {
       sidebarOpen: true,
-      events: [{sensorID:'123', areaID:'Canterbury'}, {sensorID:'321', areaID:'Ashford'}]
+      //events: []
     };
     this.onSetSidebarOpen = this.onSetSidebarOpen.bind(this);
   }
@@ -18,21 +18,22 @@ class EventBar extends React.Component {
  
   renderEvents(events) {
     var mappedEvents = events.map(event => {
-      return (<Event
-        sensorID={event.sensorID}
-        areaID={event.areaID}
-      />)
+      return (<Event event={event}/>)
     });
     return (mappedEvents);
   }
 
   render() {
+    const divStyle = {
+      backgroundColor: 'transparent'
+    }
     return (
       <Sidebar
-        sidebar={this.renderEvents(this.state.events)}
+        sidebar={this.renderEvents(this.props.events)}
         open={this.state.sidebarOpen}
         onSetOpen={this.onSetSidebarOpen}
-        styles={{ sidebar: { background: "white" } }}
+        styles={{ sidebar: { background: "transparent" }}}
+        shadow={false}
       >
         <button onClick={() => this.onSetSidebarOpen(true)}>
           Open sidebar

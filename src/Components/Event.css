@@ -1,0 +1,41 @@
+.Severe, .Warning, .Alert, .Over {
+    text-align: left;
+    margin: 5px;
+    border-radius: 10px;
+    padding: 5px;
+    border: 1px solid black;
+    max-width: 500px;
+}
+
+.Severe {
+    background-color: #f60202;
+}
+
+.Warning {
+    background-color: orange;
+}
+
+.Alert {
+    background-color: gold;
+}
+
+.Over {
+    background-color: green;
+}
+
+.Message {
+    background-color: white;
+    padding: 5px;
+    margin: 5px;
+    border: 1px solid black;
+    border-radius: 10px;
+}
+
+.NoMessage {
+    display: none;
+}
+
+.Information {
+    font-size: small;
+    text-align: right;
+}

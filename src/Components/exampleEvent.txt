@@ -1,0 +1,20 @@
+{ 
+    id : "http://environment.data.gov.uk/flood-monitoring/id/floods/91436" ,
+    description : "North Sea Coast from Whitby to Filey" ,
+    eaAreaName : "Yorkshire" ,
+    eaRegionName : "North East" ,
+    floodArea : { 
+      id : "http://environment.data.gov.uk/flood-monitoring/id/floodAreas/122WAC953" ,
+      county : "North Yorkshire" ,
+      notation : "122WAC953" ,
+      polygon : "http://environment.data.gov.uk/flood-monitoring/id/floodAreas/122WAC953/polygon" ,
+      riverOrSea : "North Sea"
+    },
+    floodAreaID : "122WAC953" ,
+    isTidal : true ,
+    severity : "Warning no longer in force" ,
+    severityLevel : 4 ,
+    timeMessageChanged : "2015-02-02T19:32:00" ,
+    timeRaised : "2015-02-02T19:32:00" ,
+    timeSeverityChanged : "2015-02-02T19:32:00"
+}
