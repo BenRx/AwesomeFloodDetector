@@ -36,6 +36,7 @@ class MainContainer extends Component {
 
     this.state = {
       sensorList: [],
+      eventList: [],
       user: null
     }
   }
@@ -56,7 +57,7 @@ class MainContainer extends Component {
 
   onEventUpdate(ref, eventList) {
     this.eventRef = ref;
-    // TODO : HYDRATE EVENT VIEW
+    this.setState({eventList: eventList});
   }
   
   onSensorUpdate(ref, sensorList) {
@@ -93,7 +94,7 @@ class MainContainer extends Component {
       <Search searchCallback={this.onSearchTextReceived}/>
       </div>
       <div className="SidebarContainer">
-      <Sidebar events={[]}/>
+      <Sidebar events={this.state.eventList}/>
       </div>
       <Map ref="Gmap" google={this.props.google} centerAroundCurrentLocation={true}>
       {this.state.sensorList.map(cur => {
