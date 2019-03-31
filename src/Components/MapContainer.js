@@ -7,7 +7,20 @@ import SensorsDataController from '../Controllers/SensorsDataController'
 import EventsDataController from '../Controllers/EventsDataController'
 import FirebaseStoreSingleton from '../Stores/FirebaseStore';
 import './Res/MapContainer.css';
+import Sidebar from './Sidebar'
+import SensorInfo from './SensorInfo'
 import 'firebaseui/dist/firebaseui.css';
+
+var data = [
+  [
+    {date: "2015-02-02T19:32:00",value: 0.125},
+    {date: "2015-02-02T19:40:00",value: 0.2}
+  ],
+  [
+    {date: "2015-03-02T13:32:00",value: 0.3},
+    {date: "2015-03-02T17:32:00",value: 0.1}
+  ]
+]
 
 class MapContainer extends Component {
   constructor(props) {
@@ -19,7 +32,6 @@ class MapContainer extends Component {
 
     this.sensorDataController = new SensorsDataController();
     this.sensorDataController.subscribeToSensorsUpdates(this.onSensorUpdate);
-
     this.eventsDataController = new EventsDataController();
     this.eventsDataController.subscribeToEvents(this.onEventUpdate);
 
@@ -73,6 +85,9 @@ class MapContainer extends Component {
   render() {
     return (
       <div className="MapContainer">
+      <div style={{zIndex:10, position:'absolute'}}>
+      <SensorInfo data={data} ID='1234'/>
+      </div>
       <div id="firebase-auth" className="Login">
       </div>
       <div className="SearchBarContainer">
