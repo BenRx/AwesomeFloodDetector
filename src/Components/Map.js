@@ -20,7 +20,7 @@ class Map extends React.Component {
             }
         }
     }
-
+    
     componentDidMount(prevProps, prevState) {
         if (this.props.centerAroundCurrentLocation) {
             if (navigator && navigator.geolocation) {
@@ -37,7 +37,7 @@ class Map extends React.Component {
         }
         this.loadMap();
     }
-
+    
     componentDidUpdate(prevProps, prevState) {
         if (prevProps.google !== this.props.google) {
             this.loadMap();
@@ -46,14 +46,28 @@ class Map extends React.Component {
             this.recenterMap();
         }
     }
-
+    
+    renderChildren() {
+        const {children} = this.props;
+        
+        if (!children) return;
+        
+        return React.Children.map(children, c => {
+            return React.cloneElement(c, {
+                map: this.map,
+                google: this.props.google,
+                mapCenter: this.state.currentLocation
+            });
+        })
+    }
+    
     recenterMap() {
         const map = this.map;
         const curr = this.state.currentLocation;
-
+        
         const google = this.props.google;
         const maps = google.maps;
-
+        
         if (map) {
             let center = new maps.LatLng(curr.lat, curr.lng)
             map.panTo(center)
@@ -66,7 +80,7 @@ class Map extends React.Component {
             const maps = google.maps;
             const mapRef = this.refs.Map;
             const node = ReactDOM.findDOMNode(mapRef);
-
+            
             
             let zoom = this.props.zoom;
             const {lat, lng} = this.state.currentLocation;
@@ -79,31 +93,37 @@ class Map extends React.Component {
             this.map = new maps.Map(node, mapConfig);
         }
     }
-
-    render() {
-      return (
-        <div ref='Map' style={{width: this.state.width, height: this.state.height}}>
-          Loading map...
-        </div>
-      )
+    
+    doSearchOnSensorId(text) {
+        console.log("Searching on " + text + " ...");
+        // TODO : DO THE SEARCH
     }
-}
-
-Map.propTypes = {
-    google: PropTypes.object,
-    zoom: PropTypes.number,
-    initialCenter: PropTypes.object,
-    centerAroundCurrentLocation: PropTypes.bool
-}
-
-Map.defaultProps = {
-    zoom: 6,
-    // England, by default
-    initialCenter: {
-      lat: 53.798264,
-      lng: -1.548103
-    },
-    centerAroundCurrentLocation: false
-}
-
-export default Map;
+    
+    render() {
+        return (
+            <div ref='Map' style={{width: this.state.width, height: this.state.height}}>
+            Loading map...
+            {this.renderChildren()}
+            </div>
+            )
+        }
+    }
+    
+    Map.propTypes = {
+        google: PropTypes.object,
+        zoom: PropTypes.number,
+        initialCenter: PropTypes.object,
+        centerAroundCurrentLocation: PropTypes.bool
+    }
+    
+    Map.defaultProps = {
+        zoom: 10,
+        // England, by default
+        initialCenter: { 
+            lat: 51.279401,
+            lng: 1.079216
+        },
+        centerAroundCurrentLocation: false
+    }
+    
+    export default Map;
