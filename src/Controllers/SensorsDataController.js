@@ -9,8 +9,10 @@ class SensorsDataController {
         return this.firebaseStore.getData("sensors_history");
     }
 
-    getSensorHistory(sID) {
-        return this.firebaseStore.getData(`sensors_history/${sID}`);
+    getSensorHistory(sID, resultCallback) {
+        this.firebaseStore.getData(`sensors_history/${sID}`).then(snapshot => {
+            resultCallback(snapshot.val());
+        });
     }
 
     subscribeToSensorsUpdates(subscriptionCallback) {
