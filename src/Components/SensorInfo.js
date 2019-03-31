@@ -41,8 +41,8 @@ class SensorInfo extends React.Component {
       verticallyCenter={true}
     >
       <div className='Sensor-modal'>
-        <h2 id='modal-title'>Sensor history</h2>
-        <HistGraph data={[5,10,1,3]} size={[400,400]} />
+        <h2 id='modal-title'>History of sensor #{this.props.ID}</h2>
+        <HistGraph data={this.props.data} size={[400,400]} />
         <button onClick={this.deactivateModal}>Close</button>
       </div>
 

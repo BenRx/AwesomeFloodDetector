@@ -1,31 +1,37 @@
 import React, {Component} from 'react';
 import {Line} from 'react-chartjs'
+import moment from 'moment'
 
-class BarChart extends Component {
-render() {
-    const chartData = {
-        labels: ["January", "February", "March", "April", "May", "June", "July"],
-        datasets: [
-            {
-                label: "My First dataset",
-                fillColor: "rgba(220,220,220,0)",
-                strokeColor: "rgba(220,220,220,1)",
-                pointColor: "rgba(220,220,220,1)",
-                data: [65, 59, 80, 81, 56, 40]
-            },
-            {
-                label: "My Second dataset",
-                fillColor: "rgba(151,187,205,0)",
-                strokeColor: "rgba(151,187,205,1)",
-                pointColor: "rgba(151,187,205,1)",
-                data: [28, 48, 40, 19, 86, 27, 90]
+class Chart extends Component {
+    constructor(props) {
+        super(props);
+        let labelList = [];
+        let dataList = [];
+        this.props.data.forEach((day) => {
+            day.forEach(measure => {
+                labelList.push(moment(measure.date).format('YY/MM/DD, HH:mm:ss'));
+                dataList.push(measure.value);
+            });
+        })
+        this.state = {
+            chartData: {
+                labels: labelList,
+                datasets: [{
+                    label: "Water level",
+                    fillColor: "rgba(220,220,220,0)",
+                    strokeColor: "rgba(220,220,220,1)",
+                    pointColor: "rgba(220,220,220,1)",
+                    data: dataList
+                }]
             }
-        ]
-    };
+        };
+    }
 
-    return (<div>
-        <Line data={chartData} options={{}} width="400" height="400"/>
-        </div>)
-   }
+    render() {
+        return (<div>
+            <Line data={this.state.chartData} width="400" height="400"/>
+            </div>)
+    }
 }
-export default BarChart
+
+export default Chart

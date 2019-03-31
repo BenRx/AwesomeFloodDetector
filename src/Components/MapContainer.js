@@ -84,12 +84,23 @@ var event = [{
   timeSeverityChanged : "2015-02-02T19:32:00"
 }]
 
+var data = [
+  [
+    {date: "2015-02-02T19:32:00",value: 0.1},
+    {date: "2015-02-02T19:40:00",value: 0.2}
+  ],
+  [
+    {date: "2015-03-02T13:32:00",value: 0.3},
+    {date: "2015-03-02T17:32:00",value: 0.1}
+  ]
+]
+
 class MapContainer extends Component {
     render() {
         return (
           <div className="MapContainer">
-                      <div style={{zIndex:10, position:'absolute'}}>
-            <SensorInfo/>
+            <div style={{zIndex:10, position:'absolute'}}>
+            <SensorInfo data={data} ID='1234'/>
             </div>
             <div className="SearchBarContainer">
               <Search/>
