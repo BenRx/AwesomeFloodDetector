@@ -6,8 +6,7 @@ class EventBar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      sidebarOpen: true,
-      //events: []
+      sidebarOpen: false,
     };
     this.onSetSidebarOpen = this.onSetSidebarOpen.bind(this);
   }
@@ -24,9 +23,6 @@ class EventBar extends React.Component {
   }
 
   render() {
-    const divStyle = {
-      backgroundColor: 'transparent'
-    }
     return (
       <Sidebar
         sidebar={this.renderEvents(this.props.events)}
