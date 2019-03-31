@@ -91,7 +91,7 @@ class MapContainer extends Component {
               <Search/>
             </div>
             <div className="SidebarContainer">
-              <Sidebar events={event}/>
+              <Sidebar events={[]}/>
             </div>
             <Map google={this.props.google}
             centerAroundCurrentLocation={true}/>
