@@ -1,7 +1,8 @@
 import Firebase from "firebase";
+import firebaseui from 'firebaseui';
 
 var config = {
-    apiKey: "AIzaSyBNQXjYM9AMEsSfc8e6DzgYWAkbP9VzKEM>",
+    apiKey: "AIzaSyBNQXjYM9AMEsSfc8e6DzgYWAkbP9VzKEM",
     authDomain: "river-watcher.firebaseapp.com",
     projectId: "river-watcher",
     databaseURL: "https://river-watcher.firebaseio.com",
@@ -33,6 +34,23 @@ class FirebaseStore {
     initFirebase() {
         Firebase.initializeApp(config);
         this.db = Firebase.database();
+        this.ui = new firebaseui.auth.AuthUI(Firebase.auth());
+    }
+    
+    startFirebaseUILogin(id, successCallback) {
+        this.ui.start(id, {
+            callbacks: {
+                signInSuccessWithAuthResult: successCallback
+            },
+            signInOptions: [
+              // List of OAuth providers supported.
+              Firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+              // firebase.auth.FacebookAuthProvider.PROVIDER_ID,
+              // firebase.auth.TwitterAuthProvider.PROVIDER_ID,
+              // firebase.auth.GithubAuthProvider.PROVIDER_ID
+            ],
+            // Other config options...
+          });
     }
 
     getData(path) {
