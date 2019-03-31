@@ -16,6 +16,8 @@ class EventBar extends React.Component {
   }
  
   renderEvents(events) {
+    if (events == null)
+      return null;
     var mappedEvents = events.map(event => {
       return (<Event event={event}/>)
     });
@@ -28,10 +30,10 @@ class EventBar extends React.Component {
         sidebar={this.renderEvents(this.props.events)}
         open={this.state.sidebarOpen}
         onSetOpen={this.onSetSidebarOpen}
-        styles={{ sidebar: { background: "transparent" }}}
+        styles={{ sidebar: { background: "transparent" }, content: {zIndex: 4}}}
         shadow={false}
       >
-        <button onClick={() => this.onSetSidebarOpen(true)}>
+        <button onClick={() => this.onSetSidebarOpen(!this.state.sidebarOpen)}>
           Open sidebar
         </button>
       </Sidebar>
