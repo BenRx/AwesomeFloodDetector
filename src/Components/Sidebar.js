@@ -23,10 +23,11 @@ class EventBar extends React.Component {
           <p className='Over'>
             There is currently no flooding event. To display some examples of flood alerts, press the button below.
           </p>
-          <button onClick={() => {this.setState({ sidebarOpen: true, testMode: true });}}>Test</button>
+          <button onClick={() => {fetch()}}>Test</button>          
         </div>
       );
-    var mappedEvents = events.map(event => {
+      //<button onClick={() => {this.setState({ sidebarOpen: true, testMode: true });}}>Test</button>
+      var mappedEvents = events.map(event => {
       return (<Event event={event}/>)
     });
     return (mappedEvents);
