@@ -24,8 +24,8 @@ class Event extends Component {
           messageClass = "NoMessage"
         return (
           <div className={severity}>
-                <div><b>LEVEL {this.props.event.severityLevel} {this.props.event.severity}</b></div>
-                <div>{this.props.event.floodArea.riverOrSea} in {this.props.event.eaAreaName} ({this.props.event.eaRegionName}) : {this.props.event.description}</div>
+                <div><b>LEVEL {this.props.event.severityLevel} : {this.props.event.severity}</b></div>
+                <div>{this.props.event.floodArea.riverOrSea} in {this.props.event.eaAreaName} ({this.props.event.eaRegionName}) {this.props.event.description}</div>
                 <div className={messageClass}>
                   {this.props.event.message}
                   <div className='Information'>{this.props.event.timeMessageChanged}</div>
