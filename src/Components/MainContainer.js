@@ -3,12 +3,11 @@ import Map from './Map'
 import Sidebar from './Sidebar'
 import {Marker} from 'google-maps-react';
 import Search from './Search'
+import SensorInfo from './SensorInfo'
 import SensorsDataController from '../Controllers/SensorsDataController'
 import EventsDataController from '../Controllers/EventsDataController'
 import FirebaseStoreSingleton from '../Stores/FirebaseStore';
-import './Res/MapContainer.css';
-import Sidebar from './Sidebar'
-import SensorInfo from './SensorInfo'
+import './Res/MainContainer.css';
 import 'firebaseui/dist/firebaseui.css';
 
 var data = [
@@ -22,7 +21,7 @@ var data = [
   ]
 ]
 
-class MapContainer extends Component {
+class MainContainer extends Component {
   constructor(props) {
     super(props);
     this.onSearchTextReceived = this.onSearchTextReceived.bind(this);
@@ -84,7 +83,7 @@ class MapContainer extends Component {
   
   render() {
     return (
-      <div className="MapContainer">
+      <div className="MainContainer">
       <div style={{zIndex:10, position:'absolute'}}>
       <SensorInfo data={data} ID='1234'/>
       </div>
@@ -106,4 +105,4 @@ class MapContainer extends Component {
     }
   }
   
-  export default MapContainer
+  export default MainContainer

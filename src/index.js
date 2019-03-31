@@ -1,14 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {GoogleApiWrapper} from 'google-maps-react';
-import MapContainer from './Components/MapContainer';
+import MainContainer from './Components/MainContainer';
 import * as serviceWorker from './serviceWorker';
 
 import './index.css';
 
 const Wrapper = GoogleApiWrapper({
     apiKey: ('AIzaSyBaW5MR3dOKpTGkly7eyK8E1mjBOPyHyII')
-})(MapContainer)
+})(MainContainer)
 
 ReactDOM.render(<Wrapper/>, document.getElementById('root'));
 
