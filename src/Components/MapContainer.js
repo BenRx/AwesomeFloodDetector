@@ -58,7 +58,12 @@ class MapContainer extends Component {
   }
   
   onSearchTextReceived(text) {
-    this.refs.Gmap.doSearch(text);
+    const searchResult = this.state.sensorList.find(elem => {
+      return elem.sensorId === text;
+    });
+    if (searchResult) {
+      this.refs.Gmap.recenterMap(searchResult.latitude, searchResult.longitude, 15);
+    }
   }
   
   onClickMarker(markerData) {

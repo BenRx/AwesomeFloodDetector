@@ -43,7 +43,7 @@ class Map extends React.Component {
             this.loadMap();
         }
         if (prevState.currentLocation !== this.state.currentLocation) {
-            this.recenterMap();
+            this.recenterMap(this.state.currentLocation.lat, this.state.currentLocation.lng, this.props.zoom);
         }
     }
     
@@ -61,16 +61,16 @@ class Map extends React.Component {
         })
     }
     
-    recenterMap() {
+    recenterMap(lat, lng, zoom) {
         const map = this.map;
-        const curr = this.state.currentLocation;
         
         const google = this.props.google;
         const maps = google.maps;
         
         if (map) {
-            let center = new maps.LatLng(curr.lat, curr.lng)
+            let center = new maps.LatLng(lat, lng)
             map.panTo(center)
+            map.setZoom(zoom);
         }
     }
     
@@ -92,11 +92,6 @@ class Map extends React.Component {
             })
             this.map = new maps.Map(node, mapConfig);
         }
-    }
-    
-    doSearchOnSensorId(text) {
-        console.log("Searching on " + text + " ...");
-        // TODO : DO THE SEARCH
     }
     
     render() {
