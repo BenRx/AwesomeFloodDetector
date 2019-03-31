@@ -45,9 +45,20 @@ class Map extends React.Component {
         if (prevState.currentLocation !== this.state.currentLocation) {
             this.recenterMap();
         }
-        if (prevState.sensorList !== this.state.sensorList) {
-            console.log("DATA UPDATED : REDRAWING MARKERS");
-        }
+    }
+    
+    renderChildren() {
+        const {children} = this.props;
+        
+        if (!children) return;
+        
+        return React.Children.map(children, c => {
+            return React.cloneElement(c, {
+                map: this.map,
+                google: this.props.google,
+                mapCenter: this.state.currentLocation
+            });
+        })
     }
     
     recenterMap() {
@@ -82,7 +93,7 @@ class Map extends React.Component {
             this.map = new maps.Map(node, mapConfig);
         }
     }
-
+    
     doSearchOnSensorId(text) {
         console.log("Searching on " + text + " ...");
         // TODO : DO THE SEARCH
@@ -92,6 +103,7 @@ class Map extends React.Component {
         return (
             <div ref='Map' style={{width: this.state.width, height: this.state.height}}>
             Loading map...
+            {this.renderChildren()}
             </div>
             )
         }
@@ -105,11 +117,11 @@ class Map extends React.Component {
     }
     
     Map.defaultProps = {
-        zoom: 6,
+        zoom: 10,
         // England, by default
-        initialCenter: {
-            lat: 53.798264,
-            lng: -1.548103
+        initialCenter: { 
+            lat: 51.279401,
+            lng: 1.079216
         },
         centerAroundCurrentLocation: false
     }

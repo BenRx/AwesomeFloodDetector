@@ -54,14 +54,14 @@ class FirebaseStore {
     }
 
     getData(path) {
-        var docRef = this.db.ref(path);
+        let docRef = this.db.ref(path);
         return docRef.once('value');
     }
 
     subscribeOnData(path, callback) {
-        var docRef = this.db.ref(path);
-        var dataTab = [];
+        let docRef = this.db.ref(path);
         docRef.on('value', snapshot => {
+            let dataTab = [];
             snapshot.forEach(snap => {
                 dataTab.push(snap.val());
             });
