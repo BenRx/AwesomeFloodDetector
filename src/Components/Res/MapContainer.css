@@ -9,3 +9,9 @@
     margin-top: 10px;
     z-index: 2;
 }
+
+.Login {
+    position: absolute;
+    right: 0px;
+    z-index: 10;
+}

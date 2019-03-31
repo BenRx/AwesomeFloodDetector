@@ -5,21 +5,32 @@ import {InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
 import Search from './Search'
 import SensorsDataController from '../Controllers/SensorsDataController'
 import './Res/MapContainer.css';
+import 'firebaseui/dist/firebaseui.css';
+import FirebaseStoreSingleton from '../Stores/FirebaseStore';
 
 class MapContainer extends Component {
   constructor(props) {
     super(props);
-    
     this.onSearchTextReceived = this.onSearchTextReceived.bind(this);
     this.onSensorUpdate = this.onSensorUpdate.bind(this);
     this.onSensorHistoryReceived = this.onSensorHistoryReceived.bind(this);
     this.sensorDataController = new SensorsDataController();
     this.sensorDataController.subscribeToSensorsUpdates(this.onSensorUpdate);
     this.state = {
-      sensorList: []
+      sensorList: [],
+      user: null
     }
   }
-  
+
+  componentDidMount() {
+    const firebase = FirebaseStoreSingleton.getInstance();
+    firebase.startFirebaseUILogin("#firebase-auth", result => {
+      const user = result.additionalUserInfo && result.additionalUserInfo.profile
+      console.log(user)
+      this.setState({ user })
+    })
+  }
+
   componentWillUnmount() {
     this.sensorDataController.unsubscribeToSensorsUpdates(this.sensorRef);
   }
@@ -44,6 +55,8 @@ class MapContainer extends Component {
   render() {
     return (
       <div className="MapContainer">
+      <div id="firebase-auth" className="Login">
+      </div>
       <div className="SearchBarContainer">
       <Search searchCallback={this.onSearchTextReceived}/>
       </div>
