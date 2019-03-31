@@ -38,14 +38,23 @@ class FirebaseStore {
     }
     
     startFirebaseUILogin(id, successCallback) {
-        this.ui.start(id, {
-            callbacks: {
-                signInSuccessWithAuthResult: successCallback
-            },
-            signInOptions: [
-                Firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-            ],
-        });
+        Firebase.auth().onAuthStateChanged(user => {
+            if (user) {
+              successCallback(user)
+            } else {
+                this.ui.start(id, {
+                    callbacks: {
+                        signInSuccessWithAuthResult: result => {
+                            successCallback(result.user)
+                        }
+                    },
+                    signInOptions: [
+                        Firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+                    ],
+                });        
+            }
+          });
+          
     }
     
     getData(path) {

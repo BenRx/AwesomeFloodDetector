@@ -31,8 +31,7 @@ class MapContainer extends Component {
   
   componentDidMount() {
     const firebase = FirebaseStoreSingleton.getInstance();
-    firebase.startFirebaseUILogin("#firebase-auth", result => {
-      const user = result.additionalUserInfo && result.additionalUserInfo.profile
+    firebase.startFirebaseUILogin("#firebase-auth", user => {
       console.log(user)
       this.setState({ user })
     })
