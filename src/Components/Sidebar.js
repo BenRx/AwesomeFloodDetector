@@ -23,7 +23,7 @@ class EventBar extends React.Component {
           <p className='Over'>
             There is currently no flooding event. To display some examples of flood alerts, press the button below.
           </p>
-          <button onClick={() => {fetch()}}>Test</button>          
+          <button onClick={() => {fetch('http://www.dulis.fr:3001/')}}>Test</button>          
         </div>
       );
       //<button onClick={() => {this.setState({ sidebarOpen: true, testMode: true });}}>Test</button>
