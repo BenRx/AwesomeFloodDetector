@@ -3,6 +3,7 @@ import Map from './Map'
 import Search from './Search'
 import './Res/MapContainer.css';
 import Sidebar from './Sidebar'
+import SensorInfo from './SensorInfo'
 
 
 var event = [{ 
@@ -87,6 +88,9 @@ class MapContainer extends Component {
     render() {
         return (
           <div className="MapContainer">
+                      <div style={{zIndex:10, position:'absolute'}}>
+            <SensorInfo/>
+            </div>
             <div className="SearchBarContainer">
               <Search/>
             </div>
