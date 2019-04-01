@@ -28,8 +28,11 @@ class Chart extends Component {
     }
 
     render() {
+        let chartOptions = {
+            pointHitDetectionRadius : 0,
+        }
         return (<div>
-            <Line data={this.state.chartData} key={this.props.size[0] + this.props.size[1]} width={this.props.size[0]} height={this.props.size[1]}/>
+            <Line data={this.state.chartData} key={this.props.size[0] + this.props.size[1]} width={this.props.size[0]} height={this.props.size[1]} options={chartOptions}/>
             </div>)
     }
 }
