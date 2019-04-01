@@ -16,3 +16,53 @@
     right: 0px;
     z-index: 10;
 }
+
+.UserProfile {
+    position: absolute;
+    bottom: 30px;
+    right: 0px;
+    z-index: 10;
+}
+
+.google-button {
+  /* height: 40px; */
+  padding: 8px 16px 8px 16px;
+  margin: 0px 24px 0px 24px;
+  border-width: 0;
+  min-width: 150px;
+  background: white;
+  color: rgb(117, 117, 117);
+  border-radius: 2px;
+  white-space: nowrap;
+  box-shadow: 0 2px 2px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.2),0 1px 5px 0 rgba(0,0,0,.12);
+  transition-property: background-color, box-shadow;
+  transition-duration: 150ms;
+  transition-timing-function: ease-in-out;
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+    
+.google-button__icon {
+  display: inline-block;
+  vertical-align: middle;
+  margin: 8px 0 8px 8px;
+  width: 18px;
+  height: 18px;
+  box-sizing: border-box;
+}
+
+.google-button__icon--plus {
+  width: 27px;
+}
+
+.google-button__text {
+  display: inline-block;
+  vertical-align: middle;
+  padding: 0 24px;
+  font-size: 14px;
+  font-weight: 500;
+  font-family: 'Roboto',Helvetica,Arial,sans-serif;
+}
