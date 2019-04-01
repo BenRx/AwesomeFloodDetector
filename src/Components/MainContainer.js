@@ -54,7 +54,11 @@ class MainContainer extends Component {
   }
   
   onSensorFavorited(sensorID) {
-    this.userDataController.updateUserFavList(this.state.user, sensorID);
+    if (this.state.user) {
+      this.userDataController.updateUserFavList(this.state.user, sensorID);
+    } else {
+      alert("You have to be connected to add a sensor to your favorites.");
+    }
   }
   
   onEventUpdate(ref, eventList) {
