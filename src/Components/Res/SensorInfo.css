@@ -2,8 +2,6 @@
     background-color: white;
     border: solid black 2px;
     border-radius: 15px;
-    width: 500px;
-    height: 800px;
     padding: 10px;
     overflow-y: auto;
 }

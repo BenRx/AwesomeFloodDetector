@@ -29,7 +29,7 @@ class Chart extends Component {
 
     render() {
         return (<div>
-            <Line data={this.state.chartData} width="400" height="400"/>
+            <Line data={this.state.chartData} key={this.props.size[0] + this.props.size[1]} width={this.props.size[0]} height={this.props.size[1]}/>
             </div>)
     }
 }
