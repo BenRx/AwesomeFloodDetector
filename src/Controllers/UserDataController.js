@@ -4,33 +4,32 @@ class UserDataController {
     constructor() {
         this.firebaseStore = FirebaseStoreSingleton.getInstance();
     }
-
+    
     createUser(user) {
         return this.firebaseStore.setData(`users/${user.uid}`, user);
     }
-
+    
     getUser(userID) {
         return this.firebaseStore.getData(`users/${userID}`);
     }
-
+    
     updateUser(user) {
         return this.firebaseStore.updateData(`users/${user.uid}`, user);
     }
-
+    
     tryToRecoverUser(fireUser, callback) {
         this.getUser(fireUser.uid).then(user => {
-           if (!user.val()) {
-               console.log(`User: ${fireUser.uid} doest not exist, creating a new one...`);
-               this.createUser({uid: fireUser.uid, favList: [], displayName: fireUser.displayName, photoURL: fireUser.photoURL}).then(newUser => {
-                   callback(newUser);
-               });
-           } else {
-               console.log(`User: ${user.val().uid} already exist`);
-               callback(user.val());
-           }
+            if (!user.val()) {
+                console.log(`User: ${fireUser.uid} doest not exist, creating a new one...`);
+                const newUser = this.createUser({uid: fireUser.uid, favList: [], displayName: fireUser.displayName, photoURL: fireUser.photoURL});
+                callback(newUser);
+            } else {
+                console.log(`User: ${user.val().uid} already exist`);
+                callback(user.val());
+            }
         });
     }
-
+    
     updateUserFavList(user, sensorID) {
         if (user.favList) {
             const idx = user.favList.indexOf(sensorID)

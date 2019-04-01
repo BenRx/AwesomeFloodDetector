@@ -58,8 +58,8 @@ class FirebaseStore {
     }
 
     setData(path, data) {
-        const docRef = this.db.ref(path);
-        return docRef.set(data);
+        this.db.ref(path).set(data);
+        return data;
     }
     
     getData(path) {
