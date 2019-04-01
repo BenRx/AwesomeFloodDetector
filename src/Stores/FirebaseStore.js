@@ -12,7 +12,7 @@ var FirebaseStoreSingleton = (function () {
     var instance;
     
     function createInstance() {
-        var firebaseStore = new FirebaseStore();
+        const firebaseStore = new FirebaseStore();
         return firebaseStore;
     }
     
@@ -58,12 +58,12 @@ class FirebaseStore {
     }
     
     getData(path) {
-        let docRef = this.db.ref(path);
+        const docRef = this.db.ref(path);
         return docRef.once('value');
     }
     
     subscribeOnData(path, callback) {
-        let docRef = this.db.ref(path);
+        const docRef = this.db.ref(path);
         docRef.on('value', snapshot => {
             let dataTab = [];
             snapshot.forEach(snap => {
