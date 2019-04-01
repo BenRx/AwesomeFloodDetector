@@ -142,7 +142,7 @@ function getMailingList() {
 }
 
 function formatEmailContent(events) {
-    var text = "Hello, \n " + events.length + " sensors you have suscribed raised an event : \n "
+    var text = "Hello, \n " + events.length + " sensors you have subscribed to raised an event : \n "
     text += events.reduce((txt, curEvent) =>
         txt + `\n\t- ${curEvent.eaAreaName} (Sensor ${curEvent.sensorId}) : ${curEvent.severity}`
     , "")
@@ -165,8 +165,11 @@ async function notifyEvents(events) {
               return
           }
           mailOptions.to = user.email
-          const suscribedEvents = events.filter(cur => user.favList.includes(cur.sensorId))
-          mailOptions.text = formatEmailContent(suscribedEvents)
+          const subscribedEvents = events.filter(cur => user.favList.includes(cur.sensorId))
+          if (!subscribedEvents.length) {
+              return
+          }
+          mailOptions.text = formatEmailContent(subscribedEvents)
           transporter.sendMail(mailOptions, function(error, info){
             if (error) {
               console.log(error);
