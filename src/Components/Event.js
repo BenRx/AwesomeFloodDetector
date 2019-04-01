@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import './Res/Event.css';
+import moment from 'moment'
 
 class Event extends Component {
       render() {
@@ -28,9 +29,9 @@ class Event extends Component {
                 <div>{this.props.event.floodArea.riverOrSea} in {this.props.event.eaAreaName} ({this.props.event.eaRegionName}) {this.props.event.description}</div>
                 <div className={messageClass}>
                   {this.props.event.message}
-                  <div className='Information'>{this.props.event.timeMessageChanged}</div>
+                  <div className='Information'>{moment(this.props.event.timeMessageChanged).format('YY/MM/DD, HH:mm:ss')}</div>
                 </div>
-                <div className='Information'>Raised at {this.props.event.timeRaised}, last updated at {this.props.event.timeSeverityChanged}</div>
+                <div className='Information'>Raised at {moment(this.props.event.timeRaised).format('YY/MM/DD, HH:mm:ss')}, last updated at {moment(this.props.event.timeSeverityChanged).format('YY/MM/DD, HH:mm:ss')}</div>
           </div>
         );
       }
