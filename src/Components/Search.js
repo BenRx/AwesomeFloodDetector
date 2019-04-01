@@ -21,7 +21,7 @@ class Search extends React.Component {
     return( 
       <form className = "SearchForm" >
       <input className = "SearchInput" 
-        placeholder = "Search for..."
+        placeholder = "Search by station ID..."
         ref = { input => this.input = input }
         onKeyPress={this.handleKeyPress}
         /> 

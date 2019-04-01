@@ -56,10 +56,20 @@ class FirebaseStore {
           });
           
     }
+
+    setData(path, data) {
+        const docRef = this.db.ref(path);
+        return docRef.set(data);
+    }
     
     getData(path) {
         const docRef = this.db.ref(path);
         return docRef.once('value');
+    }
+
+    updateData(path, data) {
+        const docRef = this.db.ref(path);
+        docRef.update(data);
     }
     
     subscribeOnData(path, callback) {

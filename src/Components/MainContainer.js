@@ -7,20 +7,10 @@ import ProfileButton from './ProfileButton'
 import SensorInfo from './SensorInfo'
 import SensorsDataController from '../Controllers/SensorsDataController'
 import EventsDataController from '../Controllers/EventsDataController'
+import UserDataController from '../Controllers/UserDataController';
 import FirebaseStoreSingleton from '../Stores/FirebaseStore';
 import './Res/MainContainer.css';
 import 'firebaseui/dist/firebaseui.css';
-
-var data = [
-  [
-    {date: "2015-02-02T19:32:00",value: 0.125},
-    {date: "2015-02-02T19:40:00",value: 0.2}
-  ],
-  [
-    {date: "2015-03-02T13:32:00",value: 0.3},
-    {date: "2015-03-02T17:32:00",value: 0.1}
-  ]
-]
 
 class MainContainer extends Component {
   constructor(props) {
@@ -29,11 +19,13 @@ class MainContainer extends Component {
     this.onSensorUpdate = this.onSensorUpdate.bind(this);
     this.onSensorHistoryReceived = this.onSensorHistoryReceived.bind(this);
     this.onEventUpdate = this.onEventUpdate.bind(this);
+    this.onFireUserRecovered = this.onFireUserRecovered.bind(this);
 
     this.sensorDataController = new SensorsDataController();
     this.sensorDataController.subscribeToSensorsUpdates(this.onSensorUpdate);
     this.eventsDataController = new EventsDataController();
     this.eventsDataController.subscribeToEvents(this.onEventUpdate);
+    this.userDataController = new UserDataController();
 
     this.state = {
       sensorList: [],
@@ -45,13 +37,20 @@ class MainContainer extends Component {
   componentDidMount() {
     const firebase = FirebaseStoreSingleton.getInstance();
     firebase.startFirebaseUILogin("#firebase-auth", user => {
-      this.setState({ user })
+      this.userDataController.tryToRecoverUser(user, this.onFireUserRecovered);
     })
   }
   
   componentWillUnmount() {
     this.sensorDataController.unsubscribeToSensorsUpdates(this.sensorRef);
     this.eventsDataController.unsubscribeToEvents(this.eventRef);
+  }
+
+  // MARK : CALLBACKS FUNCTIONS
+
+  onFireUserRecovered(user) {
+    this.setState({user: user})
+    console.log(user.photoURL);
   }
 
   onEventUpdate(ref, eventList) {
@@ -82,6 +81,8 @@ class MainContainer extends Component {
     this.sensorDataController.getSensorHistory(markerData.sensorId, this.onSensorHistoryReceived)
   }
   
+  // MARK : RENDIRING FUNCTIONS
+
   render() {
     return (
       <div className="MainContainer">
