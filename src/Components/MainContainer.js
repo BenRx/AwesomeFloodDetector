@@ -50,7 +50,6 @@ class MainContainer extends Component {
 
   onFireUserRecovered(user) {
     this.setState({user: user})
-    console.log(user.photoURL);
   }
 
   onEventUpdate(ref, eventList) {
