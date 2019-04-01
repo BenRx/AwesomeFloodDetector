@@ -64,9 +64,9 @@ async function eventHandler(events, provider) {
         .then(docs => {
             docs.forEach(doc => {
                 const data = doc.val()
-                oldEvents.push(data.floodArea.notation)
+                oldEvents.push(data.sensorId)
                 if ((provider == 'government' && data.sensorId == "government") || 
-                    (provider == 'mqtt' && data.floodArea.notation == events[0].floodArea.notation)
+                    (provider == 'mqtt' && data.sensorId == events[0].sensorId)
                 ) {
                     doc.ref.remove()
                 }
@@ -83,12 +83,14 @@ async function eventHandler(events, provider) {
         // Push it
         database.ref(`floods/${cur.floodArea.notation}`).set(cur)
         // Store new events to be notified
-        if (!(cur.floodArea.notation in newEvents)) {
+        if (!(cur.sensorId in oldEvents) && cur.severityLevel != 4) {
             newEvents.push(cur)
         }
     })
     
-    notifyEvents(newEvents)
+    if (newEvents.length) {
+        notifyEvents(newEvents)
+    }
 }
 
 function readingHandler(readings, provider) {
