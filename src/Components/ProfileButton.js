@@ -10,6 +10,7 @@ export default class ProfileButton extends React.Component {
           <button className="google-button">
               {photoURL && (
                 <img
+                  alt={"User pic"}
                   style={{width: 30, height: 30,  borderRadius: 15,}}
                   src={photoURL}
                 />

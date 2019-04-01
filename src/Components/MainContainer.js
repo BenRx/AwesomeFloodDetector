@@ -92,7 +92,7 @@ class MainContainer extends Component {
     return (
       <div className="MainContainer">
       <div>
-      <SensorInfo ref="SensorInfo" favList={[]} favoriteCallback={this.onSensorFavorited}/>
+      <SensorInfo ref="SensorInfo" favList={this.state.user ? this.state.user.favList : []} favoriteCallback={this.onSensorFavorited}/>
       </div>
       {this.state.user ? (
         <div className="UserProfile">
