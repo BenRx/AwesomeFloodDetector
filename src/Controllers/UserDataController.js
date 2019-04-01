@@ -21,7 +21,7 @@ class UserDataController {
         this.getUser(fireUser.uid).then(user => {
             if (!user.val()) {
                 console.log(`User: ${fireUser.uid} doest not exist, creating a new one...`);
-                const newUser = this.createUser({uid: fireUser.uid, favList: [], displayName: fireUser.displayName, photoURL: fireUser.photoURL});
+                const newUser = this.createUser({uid: fireUser.uid, favList: [], displayName: fireUser.displayName, photoURL: fireUser.photoURL, email: fireUser.email});
                 callback(newUser);
             } else {
                 console.log(`User: ${user.val().uid} already exist`);
