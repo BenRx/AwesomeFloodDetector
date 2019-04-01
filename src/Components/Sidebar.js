@@ -26,7 +26,6 @@ class EventBar extends React.Component {
           <button onClick={() => {fetch('http://www.dulis.fr:3001/')}}>Test</button>          
         </div>
       );
-      //<button onClick={() => {this.setState({ sidebarOpen: true, testMode: true });}}>Test</button>
       var mappedEvents = events.map(event => {
       return (<Event key={event.floodAreaID} event={event}/>)
     });
