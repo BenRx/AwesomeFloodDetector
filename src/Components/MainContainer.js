@@ -55,7 +55,6 @@ class MainContainer extends Component {
   
   onSensorFavorited(sensorID) {
     this.userDataController.updateUserFavList(this.state.user, sensorID);
-    console.log(this.state.user);
   }
   
   onEventUpdate(ref, eventList) {
