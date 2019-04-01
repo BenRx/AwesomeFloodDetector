@@ -32,7 +32,19 @@ class SensorInfo extends React.Component {
   };
 
   setData = (data) => {
-    this.setState({id: Object.values(Object.values(data)[0])[0].sensorId, data: data})
+    this.setState({id: Object.values(Object.values(data)[0])[0].sensorId,
+      isFavorite: this.isThisSensorFavorite(Object.values(Object.values(data)[0])[0].sensorId),
+      data: data});
+  }
+
+  isThisSensorFavorite(sensorId) {
+    if (!this.props.favList) return false;
+    this.props.favList.forEach(elem => {
+      if (elem === sensorId) {
+        return true;
+      }
+    });
+    return false;
   }
 
   getApplicationNode = () => {
@@ -44,7 +56,7 @@ class SensorInfo extends React.Component {
   };
 
   toggleFavorite = () => {
-    //fecth()
+    this.props.favoriteCallback(this.state.id);
     this.setState({isFavorite: !this.state.isFavorite});
   }
 

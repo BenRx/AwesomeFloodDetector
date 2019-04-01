@@ -19,6 +19,7 @@ class MainContainer extends Component {
     this.onSensorUpdate = this.onSensorUpdate.bind(this);
     this.onSensorHistoryReceived = this.onSensorHistoryReceived.bind(this);
     this.onEventUpdate = this.onEventUpdate.bind(this);
+    this.onSensorFavorited = this.onSensorFavorited.bind(this);
     this.onFireUserRecovered = this.onFireUserRecovered.bind(this);
 
     this.sensorDataController = new SensorsDataController();
@@ -50,6 +51,11 @@ class MainContainer extends Component {
 
   onFireUserRecovered(user) {
     this.setState({user: user})
+  }
+
+  onSensorFavorited(sensorID) {
+    this.userDataController.updateUserFavList(this.state.user, sensorID);
+    console.log(this.state.user);
   }
 
   onEventUpdate(ref, eventList) {
@@ -85,12 +91,14 @@ class MainContainer extends Component {
   render() {
     return (
       <div className="MainContainer">
-      <div>
-      <SensorInfo ref="SensorInfo"/>
-      </div>
       {this.state.user ? (
+        <div>
+        <div>
+        <SensorInfo ref="SensorInfo" favList={this.state.user.favList} favoriteCallback={this.onSensorFavorited}/>
+        </div>
         <div className="UserProfile">
           <ProfileButton user={this.state.user} />
+        </div>
         </div>
       ) : (
         <div id="firebase-auth" className="Login"></div>

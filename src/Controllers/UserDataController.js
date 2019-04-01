@@ -14,7 +14,7 @@ class UserDataController {
     }
 
     updateUser(user) {
-        return this.firebaseStore.updateData(`users/${user.uid}`);
+        return this.firebaseStore.updateData(`users/${user.uid}`, user);
     }
 
     tryToRecoverUser(fireUser, callback) {
@@ -29,6 +29,20 @@ class UserDataController {
                callback(user.val());
            }
         });
+    }
+
+    updateUserFavList(user, sensorID) {
+        if (user.favList) {
+            const idx = user.favList.indexOf(sensorID)
+            if (idx !== -1) {
+                user.favList.splice(idx, 1);
+            }  else {
+                user.favList.push(sensorID);
+            }
+        } else { 
+            user.favList = [sensorID]; 
+        }
+        this.updateUser(user);
     }
 }
 
