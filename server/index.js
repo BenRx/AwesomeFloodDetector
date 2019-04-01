@@ -161,7 +161,7 @@ async function notifyEvents(events) {
         subject: 'New flood detected'
       };
       subscriptions.forEach(user => {
-          if (!user || !user.email || !email.favList || !email.favList.length) {
+          if (!user || !user.email || !user.favList || !user.favList.length) {
               return
           }
           mailOptions.to = user.email
