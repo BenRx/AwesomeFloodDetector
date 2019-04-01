@@ -17,7 +17,6 @@ var database = firebase.database();
 
 // MQTT Client
 var mqtt = new MQTTClient(settings.mqtt);
-mqtt.start()
 mqtt.on('sensorReading', data => readingHandler([data], 'mqtt'))
 mqtt.on('sensorEvent', data => eventHandler([data], 'mqtt'))
 
@@ -34,7 +33,6 @@ app.listen(3001, function () {
 // Government API
 var govAPI = new RiverGovernmentAPI(settings.governmentApi)
 setInterval(fetchGovernmentData, settings.governmentApi.updateRate);
-fetchGovernmentData()
 
 function fetchGovernmentData() {
     govAPI.fetch()
@@ -42,6 +40,19 @@ function fetchGovernmentData() {
         eventHandler(events, 'government')
         readingHandler(readings, 'government')
     })
+}
+
+var sensors = { }
+database.ref('sensors')
+    .once('value')
+    .then(data => {
+        sensors = data.val()
+        start()
+    })
+
+function start() {
+    mqtt.start()
+    fetchGovernmentData()
 }
 
 /*
@@ -75,6 +86,12 @@ async function eventHandler(events, provider) {
 function readingHandler(readings, provider) {
     console.log('New readings from ' + provider, readings)
     readings.map(cur => {
+        // Do not insert twice same data
+        if (cur.sensorId in sensors && sensors[cur.sensorId].date == cur.date) {
+            return
+        }
+        sensors[cur.sensorId] = cur
+
         const day = moment(cur.date).format('Y-MM-DD')
         database.ref(`sensors_history/${cur.sensorId}/${day}`)
                 .push()
