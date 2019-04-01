@@ -1,38 +1,33 @@
-const settings = require("./settings");
+const apiSettings = require("./settings/api");
 const moment = require('moment');
 const firebase = require("firebase");
 // Required for side-effects
 require("firebase/firestore");
+const admin = require("firebase-admin");
 const express = require('express')
-var cors = require('cors')
-const app = express()
-app.use(cors())
-
+const cors = require('cors')
+const nodemailer = require('nodemailer');
 const MQTTClient = require('./mqttClient');
 const mqttFloodingSimulation = require('./mocks/mqttFlooding');
 const RiverGovernmentAPI = require('./RiverGovernmentAPI');
 
-firebase.initializeApp(settings.firebase);
+// Initializing db connection
+firebase.initializeApp(apiSettings.firebase);
 var database = firebase.database();
+// Initializing admin sdk
+admin.initializeApp({
+    credential: admin.credential.cert(require("./settings/firebase-admin.json")),
+    databaseURL: "https://river-watcher.firebaseio.com"
+});  
 
 // MQTT Client
-var mqtt = new MQTTClient(settings.mqtt);
+var mqtt = new MQTTClient(apiSettings.mqtt);
 mqtt.on('sensorReading', data => readingHandler([data], 'mqtt'))
 mqtt.on('sensorEvent', data => eventHandler([data], 'mqtt'))
 
-
-app.get('/', function (req, res) {
-    mqttFloodingSimulation(mqtt, 10000)
-    res.status(200).send("Running tests ...");
-})
-
-app.listen(3001, function () {
-  console.log('Testing server listening on port 3000 !')
-})
-
 // Government API
-var govAPI = new RiverGovernmentAPI(settings.governmentApi)
-setInterval(fetchGovernmentData, settings.governmentApi.updateRate);
+var govAPI = new RiverGovernmentAPI(apiSettings.governmentApi)
+setInterval(fetchGovernmentData, apiSettings.governmentApi.updateRate);
 
 function fetchGovernmentData() {
     govAPI.fetch()
@@ -42,6 +37,7 @@ function fetchGovernmentData() {
     })
 }
 
+// Fetch current sensors status so that we do not insert same data twice
 var sensors = { }
 database.ref('sensors')
     .once('value')
@@ -60,27 +56,39 @@ function start() {
  */
 async function eventHandler(events, provider) {
     console.log("New events from " + provider, events)
-    if (provider == 'mqtt') {
-        await database.ref('floods/' + events[0].floodArea.notation).remove()
-        if (events[0].noFlooding) {
-            return
-        }
-    } else { // Replace every old events with those ones
-        await database.ref('floods')
-            .once('value')
-            .then(docs => {
-                docs.forEach(doc => {
-                    if (doc.val().sensorId == "government") {
-                        doc.ref.remove()
-                    }
-                })
+    // contains already existing events' id
+    var oldEvents = []
+    // Replace every old events with those ones
+    await database.ref('floods')
+        .once('value')
+        .then(docs => {
+            docs.forEach(doc => {
+                const data = doc.val()
+                oldEvents.push(data.floodArea.notation)
+                if ((provider == 'government' && data.sensorId == "government") || 
+                    (provider == 'mqtt' && data.floodArea.notation == events[0].floodArea.notation)
+                ) {
+                    doc.ref.remove()
+                }
             })
+        })
+
+    if (provider == 'mqtt' && events[0].noFlooding) {
+        return
     }
 
+    // List of new events to be notified
+    const newEvents = []
     events.map(cur => {
-        database.ref(`floods/${cur.floodArea.notation}`)
-                .set(cur)
-    })    
+        // Push it
+        database.ref(`floods/${cur.floodArea.notation}`).set(cur)
+        // Store new events to be notified
+        if (!(cur.floodArea.notation in newEvents)) {
+            newEvents.push(cur)
+        }
+    })
+    
+    notifyEvents(newEvents)
 }
 
 function readingHandler(readings, provider) {
@@ -96,8 +104,73 @@ function readingHandler(readings, provider) {
         database.ref(`sensors_history/${cur.sensorId}/${day}`)
                 .push()
                 .set(cur)
-                
-                
+
         database.ref(`sensors/${cur.sensorId}`).set(cur)
     })
+}
+
+// Express test mode callback
+const app = express()
+app.use(cors())
+app.get('/', function (req, res) {
+    mqttFloodingSimulation(mqtt, 10000)
+    res.status(200).send("Running tests ...");
+})
+
+app.listen(3001, function () {
+  console.log('Testing server listening on port 3001 !')
+})
+
+// Mailing feature
+const transporter = nodemailer.createTransport({
+    host: 'smtp.gmail.com',
+    port: 587,
+    secure: false,
+    requireTLS: true,
+    auth: apiSettings.gmail
+});
+  
+function getMailingList() {
+    return database.ref('users')
+        .once('value')
+        .then(ret => Object.values(ret.val()))
+        .then(docs =>
+            docs.map(({ email, favList }) => ({ email, favList }))
+        )
+}
+
+function formatEmailContent(events) {
+    var text = "Hello, \n " + events.length + " sensors you have suscribed raised an event : \n "
+    text += events.reduce((txt, curEvent) =>
+        txt + `\n\t- ${curEvent.eaAreaName} (Sensor ${curEvent.sensorId}) : ${curEvent.severity}`
+    , "")
+
+    return text
+}
+
+async function notifyEvents(events) {
+    if (!events.length) {
+        return
+    }
+    const subscriptions = await getMailingList()
+    var mailOptions = {
+        from: 'awesomeflooddetector@gmail.com',
+        to: 'myfriend@yahoo.com',
+        subject: 'New flood detected'
+      };
+      subscriptions.forEach(user => {
+          if (!user || !user.email || !email.favList || !email.favList.length) {
+              return
+          }
+          mailOptions.to = user.email
+          const suscribedEvents = events.filter(cur => user.favList.includes(cur.sensorId))
+          mailOptions.text = formatEmailContent(suscribedEvents)
+          transporter.sendMail(mailOptions, function(error, info){
+            if (error) {
+              console.log(error);
+            } else {
+              console.log('Email sent: ' + info.response);
+            }
+          });     
+      })
 }
