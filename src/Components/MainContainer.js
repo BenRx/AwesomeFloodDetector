@@ -44,7 +44,6 @@ class MainContainer extends Component {
   componentDidMount() {
     const firebase = FirebaseStoreSingleton.getInstance();
     firebase.startFirebaseUILogin("#firebase-auth", user => {
-      console.log(user)
       this.setState({ user })
     })
   }
@@ -85,7 +84,7 @@ class MainContainer extends Component {
   render() {
     return (
       <div className="MainContainer">
-      <div style={{zIndex:10, position:'absolute'}}>
+      <div>
       <SensorInfo ref="SensorInfo"/>
       </div>
       <div id="firebase-auth" className="Login">
