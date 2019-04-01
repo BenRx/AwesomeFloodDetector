@@ -3,6 +3,7 @@ import Map from './Map'
 import Sidebar from './Sidebar'
 import {Marker} from 'google-maps-react';
 import Search from './Search'
+import ProfileButton from './ProfileButton'
 import SensorInfo from './SensorInfo'
 import SensorsDataController from '../Controllers/SensorsDataController'
 import EventsDataController from '../Controllers/EventsDataController'
@@ -86,8 +87,14 @@ class MainContainer extends Component {
       <div style={{zIndex:10, position:'absolute'}}>
       <SensorInfo data={data} ID='1234'/>
       </div>
-      <div id="firebase-auth" className="Login">
-      </div>
+      {this.state.user ? (
+        <div className="UserProfile">
+          <ProfileButton user={this.state.user} />
+        </div>
+      ) : (
+        <div id="firebase-auth" className="Login"></div>
+      )}
+      
       <div className="SearchBarContainer">
       <Search searchCallback={this.onSearchTextReceived}/>
       </div>
