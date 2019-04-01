@@ -37,6 +37,7 @@ class MainContainer extends Component {
 
     this.state = {
       sensorList: [],
+      eventList: [],
       user: null
     }
   }
@@ -56,7 +57,7 @@ class MainContainer extends Component {
 
   onEventUpdate(ref, eventList) {
     this.eventRef = ref;
-    // TODO : HYDRATE EVENT VIEW
+    this.setState({eventList: eventList});
   }
   
   onSensorUpdate(ref, sensorList) {
@@ -65,7 +66,8 @@ class MainContainer extends Component {
   }
   
   onSensorHistoryReceived(sensorHistory) {
-    // TODO : CALL HISTORY COMPONENT HERE
+    this.refs.SensorInfo.setData(sensorHistory);
+    this.refs.SensorInfo.toggleModal();
   }
   
   onSearchTextReceived(text) {
@@ -85,7 +87,7 @@ class MainContainer extends Component {
     return (
       <div className="MainContainer">
       <div style={{zIndex:10, position:'absolute'}}>
-      <SensorInfo data={data} ID='1234'/>
+      <SensorInfo ref="SensorInfo"/>
       </div>
       {this.state.user ? (
         <div className="UserProfile">
@@ -99,13 +101,13 @@ class MainContainer extends Component {
       <Search searchCallback={this.onSearchTextReceived}/>
       </div>
       <div className="SidebarContainer">
-      <Sidebar events={[]}/>
+      <Sidebar events={this.state.eventList}/>
       </div>
       <Map ref="Gmap" google={this.props.google} centerAroundCurrentLocation={true}>
       {this.state.sensorList.map(cur => {
         return <Marker key={cur.sensorId} onClick={() => {this.onClickMarker(cur)}} position={{lat: cur.latitude, lng: cur.longitude}}/>
       })}
-      </Map>/>
+      </Map>
       </div>
       )
     }
