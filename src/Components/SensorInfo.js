@@ -39,12 +39,10 @@ class SensorInfo extends React.Component {
 
   isThisSensorFavorite(sensorId) {
     if (!this.props.favList) return false;
-    this.props.favList.forEach(elem => {
-      if (elem === sensorId) {
-        return true;
-      }
-    });
-    return false;
+    if (this.props.favList.indexOf(sensorId) < 0)
+      return false
+    else
+      return true
   }
 
   getApplicationNode = () => {
