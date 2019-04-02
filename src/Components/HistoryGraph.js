@@ -13,6 +13,8 @@ class Chart extends Component {
                 dataList.push(measure.value);
             }
         }
+        labelList = labelList.slice(0, 20);
+        dataList = dataList.slice(0, 20);
         this.state = {
             chartData: {
                 labels: labelList,
