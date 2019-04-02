@@ -66,7 +66,7 @@ async function eventHandler(events, provider) {
         .then(docs => {
             docs.forEach(doc => {
                 const data = doc.val()
-                oldEvents.push(data.floodArea.notation)
+                oldEvents.push(data.floodArea.notation + data.severityLevel)
                 if ((provider == 'government' && data.sensorId == "government") || 
                     (provider == 'mqtt' && data.sensorId == events[0].sensorId)
                 ) {
@@ -79,13 +79,14 @@ async function eventHandler(events, provider) {
         return
     }
 
+    
     // List of new events to be notified
     const newEvents = []
     events.map(cur => {
         // Push it
         database.ref(`floods/${cur.floodArea.notation}`).set(cur)
         // Store new events to be notified
-        if (!oldEvents.includes(cur.floodArea.notation) && cur.severityLevel != 4) {
+        if (!oldEvents.includes(cur.floodArea.notation + cur.severityLevel) && cur.severityLevel != 4) {
             newEvents.push(cur)
         }
     })
