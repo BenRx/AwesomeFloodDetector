@@ -17,6 +17,11 @@ module.exports = {
 
     governmentApi: {
         baseUri: process.env.GOVERNMENT_API_URI ||  'https://environment.data.gov.uk/flood-monitoring/',
-        updateRate: process.env.GOVERNMENT_UPDATE_RATE || 15*3600*1000
+        updateRate: process.env.GOVERNMENT_UPDATE_RATE || 15*60*1000
+    },
+
+    gmail: {
+        user: process.env.GMAIL_USER,
+        pass: process.env.GMAIL_PASS 
     }
 };

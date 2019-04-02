@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "river-watcher",
+  "private_key_id": "c94534ba6fe13b944cafce2219908d179363013f",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQDAUcqQAKf/PxvN\nLWatLL8oGSxZtLsKu6S8RIh0IhiNPbOdNBWNYFjZUxSKSsPJLLdUwgQ3uRvNQL1z\n/kMPrGTOrM+NH13uQD9mJh7L3NHg33HMFqwagqgoVjodF9lZeDU41d0Z8PsYSDyZ\nXXpNNnvFD8Z/GcebzyGc2OEWkrnelOJWtd45gE1y0ZI8gcJJm73oCSYMCu8PXkZG\nhA/xCdNxbIL8iOkV1wXgCYDxipZsE0W6wNFbpsU1d98CoKQ4ibWLHIVcMRED99pk\nKxr/v4w+Z7M0ZuUnDKcFwpfcAR46Z6nhhr51T0aYcXXWoSrX+Lk6qyqQ8YjnWw//\n12ZRPXbnAgMBAAECggEAHm6S3A3j3NrynkPvObtD6vzDbNUmvRW2L+he+JQl8xZE\nDr3IJJ04p02jNBg35OSDhLudXpKXA01EQqTa8xGiHftwbZynXg+ije+9ncqtF0/5\nj4Q4QDWpQEDCD1/Pun2asQn+Y6AjS34Fa3Xu6BBAA43HKM4+gg7Y+xsX0FzwC81C\ncFX2znYcInv4O/0Td6kNXfrFi8xIc7LUE/z6/R1gkFLSudwCK8MbIhAXqbjVqXZp\n0qw0EZYEYPMpy65xAAC+Px/ePZGQ3sc5yMGg7qUhcgWgkmmJMX+FD5DCzuYR8kLw\nU+I5tF4cRiOQ7SrS42ijYsisfKAnEf48wduuRKUVYQKBgQD/jOMLedmmDLRihb8T\n1JLPCYsOfCTt5Xq67w50EXfs95uea1qocOpGHAXFqGCkmqr+uNzvOMrwEJPT51Md\nWziDpH2FO5Hjyi/Gs3/Wcjdd2CL0aS1s2iZcAxYpoM1pzIQ6UBDmthRyVmnvY4Fq\nEcCcYi2jQod0vwYAyy1yyJMVUQKBgQDAqGwC90lgUFSQRw7LAjmQPUpz7BzEl+X4\nEhdCo9iPGo1Z7EtXActPhf1zor6cBwocRi29zcoRYvIcwsYRNZEobL6UwhJbprWb\nNRcFUUnwGNPPPel9S1fd58Mfw3RDEnR90xP3KmU7Ur7hqX8fAr53Uz4+cWDcqyJ+\nGaevcT8atwKBgQDDbjQIB7R590dP/SaGfM+VA6BTgH8ha5hzMvSjsOQ81ZMuEL1x\nCYEwAqgrY7wcxae1Sxyy2YThGFxk9ogqcCOFERto84h7Ypks5QMDta8/1lXNAk5Z\n627geP/O8AmHOn94tNhoB6EVW56CE1/aBR9+uNpb+znp/1gQ7VChcmCBMQKBgQCj\nf8t6kOZiqIm7j7JMMu0rLfi7fEvFw6tU5fV7hpVIjR4cjF47zrf+GxZHRnxA6fB4\nok47YCP2sWQLaHizLiSsi+0JTdJKmaZRu7J3vs7ixg8rN72pqYE+P2vmzvch3M2j\n4rh08DPNLqHz3OaXKLr/hVOzpoCvhUTWg2s9hvwo7QKBgQD53PyyfhgJBeGwkfnH\naTm0VP/bdgdHaDisT9uBYCg1v9XSra9IREmtynkBoLb0JtCHAc1X7OyauFNSVXZJ\nyYG3UGyfS2kKv9J9BcVFyuIPEk5QfEnsD+ed6Q2JLb33ttrYEQz7gB/uBy6MJzAu\nIlkfrBtp5/T1342D7r4n3fCtzA==\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-m5yh6@river-watcher.iam.gserviceaccount.com",
+  "client_id": "103934441703578463054",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-m5yh6%40river-watcher.iam.gserviceaccount.com"
+}
