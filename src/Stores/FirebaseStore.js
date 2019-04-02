@@ -57,6 +57,10 @@ class FirebaseStore {
           
     }
 
+    firebaseLogout() {
+        return Firebase.auth().signOut()
+    }
+
     setData(path, data) {
         this.db.ref(path).set(data);
         return data;

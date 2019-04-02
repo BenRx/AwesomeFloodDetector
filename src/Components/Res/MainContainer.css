@@ -25,9 +25,9 @@
 }
 
 .google-button {
-  /* height: 40px; */
+  height: 46px;
   padding: 8px 16px 8px 16px;
-  margin: 0px 24px 0px 24px;
+  /* margin: 0px 24px 0px 24px; */
   border-width: 0;
   min-width: 150px;
   background: white;
@@ -43,6 +43,7 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  z-index: 1;
 }
     
 .google-button__icon {
@@ -65,4 +66,47 @@
   font-size: 14px;
   font-weight: 500;
   font-family: 'Roboto',Helvetica,Arial,sans-serif;
+}
+
+/* dropdown */
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+  position: relative;
+  right: 20px;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  bottom: 2px;
+  width: 100%;
+  /* right: 22px; */
+  bottom: 46px;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 0;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {background-color: #f1f1f1}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown:hover .dropbtn {
+  background-color: #3e8e41;
 }

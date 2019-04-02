@@ -36,12 +36,16 @@ class MainContainer extends Component {
   }
   
   componentDidMount() {
+    this.initLoginButton()
+  }
+  
+  initLoginButton() {
     const firebase = FirebaseStoreSingleton.getInstance();
     firebase.startFirebaseUILogin("#firebase-auth", user => {
       this.userDataController.tryToRecoverUser(user, this.onFireUserRecovered);
     });
   }
-  
+
   componentWillUnmount() {
     this.sensorDataController.unsubscribeToSensorsUpdates(this.sensorRef);
     this.eventsDataController.unsubscribeToEvents(this.eventRef);
@@ -89,6 +93,15 @@ class MainContainer extends Component {
     this.sensorDataController.getSensorHistory(markerData.sensorId, this.onSensorHistoryReceived);
   }
   
+  onLogout() {
+    this.setState({ user: null }, () => {
+      FirebaseStoreSingleton.getInstance().firebaseLogout()
+      .then(() => {
+        this.initLoginButton()
+      })
+    })
+  }
+
   // MARK : RENDIRING FUNCTIONS
   
   render() {
@@ -99,7 +112,7 @@ class MainContainer extends Component {
       </div>
       {this.state.user ? (
         <div className="UserProfile">
-        <ProfileButton user={this.state.user} />
+        <ProfileButton user={this.state.user} logout={() => this.onLogout()} />
         </div>
         ) : (
           <div id="firebase-auth" className="Login"></div>
