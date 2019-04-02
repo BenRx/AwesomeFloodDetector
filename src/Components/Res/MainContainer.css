@@ -25,6 +25,7 @@
 }
 
 .google-button {
+  outline:none !important;
   height: 46px;
   padding: 8px 16px 8px 16px;
   /* margin: 0px 24px 0px 24px; */
