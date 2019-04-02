@@ -5,6 +5,8 @@ const firebase = require("firebase");
 require("firebase/firestore");
 const admin = require("firebase-admin");
 const express = require('express')
+const https = require('https');
+const fs = require('fs');
 const cors = require('cors')
 const nodemailer = require('nodemailer');
 const MQTTClient = require('./mqttClient');
@@ -119,9 +121,11 @@ app.get('/', function (req, res) {
     res.status(200).send("Running tests ...");
 })
 
-app.listen(3001, function () {
-  console.log('Testing server listening on port 3001 !')
-})
+https.createServer({
+    key: fs.readFileSync('./ssl/key.pem'),
+    cert: fs.readFileSync('./ssl/cert.pem'),
+    passphrase: 'casserdesculs'
+}, app).listen(3001, () => console.log('Listening on port 3001'));
 
 // Mailing feature
 const transporter = nodemailer.createTransport({
