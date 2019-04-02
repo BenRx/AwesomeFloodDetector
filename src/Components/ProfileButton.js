@@ -23,7 +23,7 @@ export default class ProfileButton extends React.Component {
               </div>
             </button>
 
-            <div className="dropdown-content">
+            <div class="dropdown-content">
               <a href="#" onClick={logout}>Logout</a>
             </div>            
           </div>
