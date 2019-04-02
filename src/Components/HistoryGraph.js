@@ -13,8 +13,8 @@ class Chart extends Component {
                 dataList.push(measure.value);
             }
         }
-        labelList = labelList.slice(0, 15);
-        dataList = dataList.slice(0, 15);
+        labelList = labelList.slice(labelList.length - 15);
+        dataList = dataList.slice(dataList.length - 15);
         this.state = {
             chartData: {
                 labels: labelList,
