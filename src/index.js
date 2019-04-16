@@ -7,7 +7,7 @@ import * as serviceWorker from './serviceWorker';
 import './index.css';
 
 const Wrapper = GoogleApiWrapper({
-    apiKey: ('AIzaSyBaW5MR3dOKpTGkly7eyK8E1mjBOPyHyII')
+    apiKey: ('')
 })(MainContainer)
 
 ReactDOM.render(<Wrapper/>, document.getElementById('root'));
